@@ -24,50 +24,37 @@ export default function SelectDayStep() {
   const [hora, setHora] = useState("")
   const [date, setDate] = useState<Date | undefined>(new Date())
 
-  // determinar el mes de inicio, en este caso el mes actual
   const currentDate = new Date();
+
+  // determinar el mes de inicio, en este caso el mes actual
   const fromMonth = new Date(2024, currentDate.getMonth() - 1);
+  
+  // determinar el mes final, en este caso 8 meses despues del mes actual
   const toMonth = new Date(2024, fromMonth.getMonth() + 8);
 
+  const currentYear = currentDate.getFullYear()
+  const currentMonth = currentDate.getMonth()
+  const currentDay = currentDate.getDate()
+
   const disabledDays = [
-    new Date(
-      currentDate.getFullYear(),
-      currentDate.getMonth(),
-      currentDate.getDate() + 3
-    ),
-    new Date(
-      currentDate.getFullYear(),
-      currentDate.getMonth(),
-      currentDate.getDate() + 9
-    ),
-    new Date(
-      currentDate.getFullYear(),
-      currentDate.getMonth(),
-      currentDate.getDate() + 2
-    ),
-    new Date(
-      currentDate.getFullYear(),
-      currentDate.getMonth(),
-      currentDate.getDate() + 12
-    ),
-    new Date(
-      currentDate.getFullYear(),
-      currentDate.getMonth(),
-      currentDate.getDate() + 14
-    ),
-    new Date(
-      currentDate.getFullYear(),
-      currentDate.getMonth(),
-      currentDate.getDate() + 18
-    ),
+    new Date(currentYear, currentMonth, currentDay + 3),
+    new Date(currentYear, currentMonth, currentDay + 9),
+    new Date(currentYear, currentMonth, currentDay + 12),
+    new Date(currentYear, currentMonth, currentDay + 18),
+    new Date(currentYear, currentMonth, currentDay + 24),
     {
-      from: new Date(
-        currentDate.getFullYear(),
-        currentDate.getMonth(),
-        currentDate.getDate() - 1),
+      from: new Date(currentYear, currentMonth, currentDate.getDate() - 1),
       to: new Date(2024, 1, 0)
     }
   ];
+
+  // Desabilirar los fines de semana
+  for (let i = fromMonth.getTime(); i <= toMonth.getTime(); i += 24 * 60 * 60 * 1000) {
+    const day = new Date(i);
+    if (day.getDay() === 0 || day.getDay() === 6) {
+      disabledDays.push(day);
+    }
+  }
 
   return (
     <div>
@@ -80,20 +67,7 @@ export default function SelectDayStep() {
         mode="single"
         selected={date}
         onSelect={setDate}
-        className="rounded-md my-4 hidden md:flex justify-center items-center"
-        numberOfMonths={2}
-        locale={es}
-        disabled={disabledDays}
-        showOutsideDays={false}
-        fromMonth={fromMonth}
-        toMonth={toMonth}
-      />
-
-      <Calendar
-        mode="single"
-        selected={date}
-        onSelect={setDate}
-        className="rounded-md my-4 w-full md:hidden flex justify-center items-center"
+        className="rounded-md my-4 w-full flex justify-center items-center"
         numberOfMonths={1}
         locale={es}
         disabled={disabledDays}
