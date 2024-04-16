@@ -18,7 +18,7 @@ export default function IndexPage() {
     <MainLayout>
       <div className="flex justify-center items-center w-full">
 
-        <div className="p-6 md:p-4 md:px-8 rounded-md shadow-xl bg-white relative overflow-hidden w-full">
+        <div className="p-6 md:p-4 md:px-8 rounded-md shadow-xl bg-neutral-50 relative overflow-hidden w-full">
 
           <div className="h-2 bg-green-900 absolute top-0 inset-x-0" />
 
