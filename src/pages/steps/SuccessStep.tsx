@@ -62,7 +62,7 @@ export default function SuccessStep() {
 
         <div className="flex gap-0 md:gap-3 md:flex-row flex-col">
           Concepto de pago:
-          <span>5431</span>
+          <span>SRE</span>
         </div>
       </div>
 
