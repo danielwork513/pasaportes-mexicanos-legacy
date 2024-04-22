@@ -5,7 +5,7 @@ import { setAppLastStep } from "@/stores/steps";
 export default function SuccessStep() {
   const { data } = useDataStore()
 
-  const { diaCita, horaCita, vigenciaPrecio, curps } = data
+  const { diaCita, horaCita, vigenciaPrecio, curps, bank } = data
 
   // calcular el precio
   const precio = vigenciaPrecio * curps.length
@@ -45,25 +45,54 @@ export default function SuccessStep() {
           {vigenciaPrecio && <span>{precioLocal}</span>}
         </div>
 
-        <div className="flex gap-0 md:gap-3 md:flex-row flex-col">
-          CLABE interbancaria:
-          <span>1385 8000 0019 7371 54</span>
+        <div className="flex gap-1 md:gap-3 md:flex-row flex-col">
+          Metodo de pago:
+          {bank === "SPEI" && (
+            <>
+              <span>Transferencia Bancaria SPEI</span>
+            </>
+          )}
+          {bank === "OXXO" && (
+            <>
+              <span>Pago por OXXO</span>
+            </>
+          )}
         </div>
 
         <div className="flex gap-0 md:gap-3 md:flex-row flex-col">
-          Institucion bancaria:
-          <span>ABC CAPITAL</span>
+          {bank === "SPEI" && (
+            <>
+              CLABE interbancaria:
+              <span>1385 8000 0019 7371 54</span>
+            </>
+          )}
+          {bank === "OXXO" && (
+            <>
+              Numero de cuenta:
+              <span>5362 8610 0934 4371</span>
+            </>
+          )}
         </div>
 
-        <div className="flex gap-0 md:gap-3 md:flex-row flex-col">
-          Beneficiario:
-          <span>Afiliado Mi Pasaporte</span>
-        </div>
+        {bank === "SPEI" && (
+          <>
+            <div className="flex gap-0 md:gap-3 md:flex-row flex-col">
+              Institucion bancaria:
+              <span>ABC CAPITAL</span>
+            </div>
 
-        <div className="flex gap-0 md:gap-3 md:flex-row flex-col">
-          Concepto de pago:
-          <span>SRE</span>
-        </div>
+            <div className="flex gap-0 md:gap-3 md:flex-row flex-col">
+              Beneficiario:
+              <span>Afiliado Mi Pasaporte</span>
+            </div>
+
+            <div className="flex gap-0 md:gap-3 md:flex-row flex-col">
+              Concepto de pago:
+              <span>SRE</span>
+            </div>
+          </>
+        )}
+
       </div>
 
       <div
